@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="format-detection" content="telephone=yes" />
+  <title>树礼见山·茶馆·棋牌</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ===== 顶部导航 ===== -->
+<header class="nav-bar">
+  <button class="nav-btn nav-back" id="btnBack" aria-label="返回">
+    <i class="fa-solid fa-chevron-left"></i>
+  </button>
+  <span class="nav-title">树礼见山·Mountain in sight</span>
+  <div class="nav-actions">
+    <button class="nav-btn" id="btnShare" aria-label="分享"><i class="fa-solid fa-share-nodes"></i></button>
+    <button class="nav-btn" id="btnFav" aria-label="收藏"><i class="fa-regular fa-star" id="favIcon"></i></button>
+  </div>
+</header>
+
+<!-- ===== Banner 轮播 ===== -->
+<section class="banner-wrap">
+  <div class="banner-slider" id="bannerSlider">
+    <div class="banner-slide slide-1">
+      <div class="banner-overlay">
+        <span class="banner-tag"><i class="fa-solid fa-leaf"></i> 全新装修 · 正式营业</span>
+      </div>
+    </div>
+    <div class="banner-slide slide-2">
+      <div class="banner-overlay">
+        <span class="banner-tag"><i class="fa-solid fa-chess"></i> 棋牌娱乐 · 专业灯光</span>
+      </div>
+    </div>
+    <div class="banner-slide slide-3">
+      <div class="banner-overlay">
+        <span class="banner-tag"><i class="fa-solid fa-mug-hot"></i> 品茗聊天 · 好友小聚</span>
+      </div>
+    </div>
+    <div class="banner-slide slide-4">
+      <div class="banner-overlay">
+        <span class="banner-tag"><i class="fa-solid fa-wifi"></i> 免费 WiFi · 24小时营业</span>
+      </div>
+    </div>
+  </div>
+  <div class="banner-counter"><span id="slideNow">1</span>/4</div>
+  <div class="banner-dots" id="bannerDots">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+</section>
+
+<!-- ===== 服务标签 ===== -->
+<section class="service-tags-bar">
+  <span class="stag"><i class="fa-solid fa-chess-board"></i> 棋牌</span>
+  <span class="stag"><i class="fa-solid fa-mug-hot"></i> 茶室</span>
+  <span class="stag"><i class="fa-solid fa-briefcase"></i> 商务</span>
+  <span class="stag"><i class="fa-solid fa-clock"></i> 24小时</span>
+  <span class="stag"><i class="fa-solid fa-wifi"></i> 免费WiFi</span>
+  <span class="stag"><i class="fa-solid fa-hand-pointer"></i> 可自助</span>
+</section>
+
+<!-- ===== 门店基本信息 ===== -->
+<section class="shop-info-card">
+  <div class="shop-name-row">
+    <h1 class="shop-name">树礼见山·茶馆·棋牌</h1>
+    <div class="shop-open-badge">营业中</div>
+  </div>
+  <div class="shop-meta">
+    <div class="shop-rating">
+      <span class="stars">
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star-half-stroke"></i>
+      </span>
+      <span class="rating-score">4.8</span>
+      <span class="rating-count">（318人评）</span>
+    </div>
+    <div class="shop-per-capita">¥28/人均</div>
+  </div>
+  <div class="shop-hours">
+    <i class="fa-regular fa-clock"></i>
+    <span>营业时间：<strong>24小时营业</strong></span>
+  </div>
+  <div class="shop-address-row">
+    <i class="fa-solid fa-location-dot addr-icon"></i>
+    <span class="addr-text">陕西省西安市莲湖区汉城南路万锦城购物中心三楼北侧06铺</span>
+  </div>
+  <div class="shop-distance">
+    <i class="fa-solid fa-route"></i> 距您约 18.2km
+  </div>
+  <div class="shop-contacts">
+    <a class="contact-btn" href="tel:13363917833">
+      <i class="fa-solid fa-phone"></i> 拨打电话
+    </a>
+    <button class="contact-btn contact-btn-alt" id="btnNav">
+      <i class="fa-solid fa-diamond-turn-right"></i> 立即导航
+    </button>
+  </div>
+</section>
+
+<!-- ===== 预订 CTA ===== -->
+<section class="cta-section">
+  <button class="btn-book" id="btnBook">
+    <i class="fa-solid fa-calendar-check"></i> 立即预订
+  </button>
+  <p class="cta-tip">随时退 · 过期自动退 · 无需等待</p>
+</section>
+
+<!-- ===== 优惠券横幅 ===== -->
+<section class="coupon-banner">
+  <div class="coupon-left">
+    <i class="fa-solid fa-tag"></i>
+    <span>神券 最高省 <strong>50元</strong></span>
+  </div>
+  <button class="coupon-grab">立即抢</button>
+  <button class="coupon-more">全部 <i class="fa-solid fa-chevron-right"></i></button>
+</section>
+
+<!-- ===== 团购套餐 ===== -->
+<section class="packages-section">
+  <div class="section-title">
+    <span class="section-icon"><i class="fa-solid fa-ticket"></i></span>
+    <span>团购套餐</span>
+  </div>
+
+  <div class="package-list" id="packageList">
+
+    <!-- 套餐 1 -->
+    <div class="package-card" data-id="1">
+      <div class="pkg-img pkg-img-1">
+        <span class="pkg-new-badge">新品</span>
+      </div>
+      <div class="pkg-info">
+        <div class="pkg-title">【春日上新】单人畅玩5件套（可选新品）TG1918</div>
+        <div class="pkg-tags">
+          <span class="ptag">随时退</span>
+          <span class="ptag">过期自动退</span>
+        </div>
+        <div class="pkg-desc">藤椒鸡腿中国茶馆、确定好茗静、劲辣香…</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">¥24.9</span>
+          <span class="pkg-discount-tag">6.2折</span>
+          <span class="pkg-origin">¥40.8</span>
+          <div class="pkg-sales">半年售 1.2万+</div>
+        </div>
+      </div>
+      <button class="btn-grab">抢购</button>
+    </div>
+
+    <!-- 套餐 2 -->
+    <div class="package-card" data-id="2">
+      <div class="pkg-img pkg-img-2">
+        <span class="pkg-new-badge">新品</span>
+      </div>
+      <div class="pkg-info">
+        <div class="pkg-title">【春日上新】双人2+2+2出游分享（可选新品）TG1863</div>
+        <div class="pkg-tags">
+          <span class="ptag">随时退</span>
+          <span class="ptag">过期自动退</span>
+        </div>
+        <div class="pkg-desc">特惠促销最多省27.1元</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">¥30.9</span>
+          <span class="pkg-discount-tag">5.4折</span>
+          <span class="pkg-origin">¥58</span>
+          <div class="pkg-sales">半年售 1.8万+</div>
+        </div>
+      </div>
+      <button class="btn-grab">抢购</button>
+    </div>
+
+    <!-- 套餐 3 -->
+    <div class="package-card" data-id="3">
+      <div class="pkg-img pkg-img-3"></div>
+      <div class="pkg-info">
+        <div class="pkg-title">【百万爆品】单人四件套TG1915</div>
+        <div class="pkg-tags">
+          <span class="ptag">随时退</span>
+          <span class="ptag">过期自动退</span>
+        </div>
+        <div class="pkg-desc">香辣鸡腿中国茶馆、确定好鸡静、冰…</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">¥14.8</span>
+          <span class="pkg-discount-tag">4.9折</span>
+          <span class="pkg-origin">¥30.8</span>
+          <div class="pkg-sales">半年售 1055万+</div>
+        </div>
+      </div>
+      <button class="btn-grab">抢购</button>
+    </div>
+
+    <!-- 套餐 4 -->
+    <div class="package-card" data-id="4">
+      <div class="pkg-img pkg-img-4"></div>
+      <div class="pkg-info">
+        <div class="pkg-title">【茶友专享】四人包厢欢乐套TG2026</div>
+        <div class="pkg-tags">
+          <span class="ptag">随时退</span>
+          <span class="ptag">包厢专享</span>
+        </div>
+        <div class="pkg-desc">精品茶叶一份·棋牌4小时·小食拼盘</div>
+        <div class="pkg-price-row">
+          <span class="pkg-price">¥88</span>
+          <span class="pkg-discount-tag">7.3折</span>
+          <span class="pkg-origin">¥120</span>
+          <div class="pkg-sales">半年售 3200+</div>
+        </div>
+      </div>
+      <button class="btn-grab">抢购</button>
+    </div>
+
+  </div>
+  <button class="btn-more-pkg" id="btnMorePkg">
+    查看更多套餐 <i class="fa-solid fa-chevron-down"></i>
+  </button>
+</section>
+
+<!-- ===== 服务亮点 ===== -->
+<section class="highlights-section">
+  <div class="section-title">
+    <span class="section-icon"><i class="fa-solid fa-star"></i></span>
+    <span>服务亮点</span>
+  </div>
+  <div class="highlights-grid">
+    <div class="hl-item">
+      <div class="hl-icon"><i class="fa-solid fa-chess"></i></div>
+      <div class="hl-label">棋牌娱乐</div>
+      <div class="hl-desc">麻将·扑克·象棋·围棋</div>
+    </div>
+    <div class="hl-item">
+      <div class="hl-icon"><i class="fa-solid fa-mug-hot"></i></div>
+      <div class="hl-label">精品茶饮</div>
+      <div class="hl-desc">普洱·龙井·铁观音·大红袍</div>
+    </div>
+    <div class="hl-item">
+      <div class="hl-icon"><i class="fa-solid fa-briefcase"></i></div>
+      <div class="hl-label">商务包厢</div>
+      <div class="hl-desc">私密安静·商务洽谈首选</div>
+    </div>
+    <div class="hl-item">
+      <div class="hl-icon"><i class="fa-solid fa-snowflake"></i></div>
+      <div class="hl-label">舒适环境</div>
+      <div class="hl-desc">中央空调·香氛·新风系统</div>
+    </div>
+    <div class="hl-item">
+      <div class="hl-icon"><i class="fa-solid fa-wifi"></i></div>
+      <div class="hl-label">免费 WiFi</div>
+      <div class="hl-desc">千兆光纤·全场覆盖</div>
+    </div>
+    <div class="hl-item">
+      <div class="hl-icon"><i class="fa-solid fa-clock"></i></div>
+      <div class="hl-label">24小时营业</div>
+      <div class="hl-desc">全年无休·随时到访</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 门店介绍 ===== -->
+<section class="intro-section" id="introSection">
+  <div class="section-title">
+    <span class="section-icon"><i class="fa-solid fa-store"></i></span>
+    <span>门店介绍</span>
+  </div>
+  <div class="intro-content" id="introContent">
+    <p>🎉 <strong>盛大开业</strong> | 大榕树下茶馆·棋牌室（万锦城店）</p>
+    <p>⏰ 2026年2月13日 正式开业！</p>
+    <br>
+    <p>✅ 全新装修 | 全新设备</p>
+    <p>高挑空间，宽敞不压抑</p>
+    <p>空调·香氛·新风·专业灯光全配齐</p>
+    <p>落地大玻璃，氛围感直接拉满 ✨</p>
+    <br>
+    <p>喝茶聊天 | 棋牌娱乐 | 好友小聚</p>
+    <p>环境舒服，体验感超赞！</p>
+    <br>
+    <p>🎁 <strong>开业福利</strong></p>
+    <p>幸运大抽奖，好礼多多，抽完为止！</p>
+    <br>
+    <p>📍 地址：万锦城购物中心三楼北侧（E时代电竞隔壁）</p>
+    <p>📞 电话：13363917833 / 029-81515883</p>
+    <br>
+    <p>等来玩，不见不散！🐯</p>
+  </div>
+  <button class="intro-toggle" id="introToggle">
+    <span id="introToggleText">展开全部</span>
+    <i class="fa-solid fa-chevron-down" id="introToggleIcon"></i>
+  </button>
+</section>
+
+<!-- ===== 用户评价 ===== -->
+<section class="reviews-section">
+  <div class="section-title">
+    <span class="section-icon"><i class="fa-solid fa-comments"></i></span>
+    <span>用户评价</span>
+    <span class="section-more" id="btnMoreReviews">更多 <i class="fa-solid fa-chevron-right"></i></span>
+  </div>
+  <div class="review-list">
+    <div class="review-card">
+      <div class="review-header">
+        <div class="avatar avatar-1">茶</div>
+        <div class="review-user-info">
+          <div class="review-username">茶道小白</div>
+          <div class="review-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+        <span class="review-date">2026-04-10</span>
+      </div>
+      <p class="review-text">环境真的超级好！包厢宽敞干净，茶叶品质也不错，服务态度很好，下次还会来！</p>
+      <div class="review-tags">
+        <span>环境好</span><span>服务好</span><span>茶品质高</span>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-header">
+        <div class="avatar avatar-2">棋</div>
+        <div class="review-user-info">
+          <div class="review-username">老王棋友</div>
+          <div class="review-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+          </div>
+        </div>
+        <span class="review-date">2026-04-18</span>
+      </div>
+      <p class="review-text">棋牌室灯光很专业，椅子舒服，可以打一整晚！WiFi也很稳定，强烈推荐！</p>
+      <div class="review-tags">
+        <span>灯光专业</span><span>WiFi稳</span><span>性价比高</span>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-header">
+        <div class="avatar avatar-3">友</div>
+        <div class="review-user-info">
+          <div class="review-username">花花与朋友们</div>
+          <div class="review-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star-half-stroke"></i>
+          </div>
+        </div>
+        <span class="review-date">2026-04-22</span>
+      </div>
+      <p class="review-text">跟朋友来过两次了，位置在万锦城三楼很好找，停车方便，环境比网上图片还要好看！</p>
+      <div class="review-tags">
+        <span>位置好找</span><span>停车方便</span><span>拍照好看</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 地图定位区 ===== -->
+<section class="map-section">
+  <div class="section-title">
+    <span class="section-icon"><i class="fa-solid fa-map-location-dot"></i></span>
+    <span>位置信息</span>
+  </div>
+  <div class="map-placeholder" id="mapPlaceholder">
+    <div class="map-mock">
+      <div class="map-pin-anim">
+        <i class="fa-solid fa-location-dot map-pin"></i>
+      </div>
+      <p class="map-addr-text">万锦城购物中心三楼北侧06铺</p>
+    </div>
+  </div>
+  <div class="map-info-row">
+    <div class="map-info-left">
+      <p class="map-full-addr"><i class="fa-solid fa-location-dot"></i> 陕西省西安市莲湖区汉城南路万锦城购物中心三楼北侧06铺</p>
+      <p class="map-distance"><i class="fa-solid fa-route"></i> 距您约 18.2km</p>
+    </div>
+    <button class="btn-nav-map" id="btnNavMap">
+      <i class="fa-solid fa-diamond-turn-right"></i> 去这里
+    </button>
+  </div>
+</section>
+
+<!-- ===== 浮动预订按钮 ===== -->
+<div class="float-book" id="floatBook">
+  <button class="float-book-btn" id="floatBookBtn">
+    <i class="fa-solid fa-calendar-check"></i> 立即预订
+  </button>
+</div>
+
+<!-- ===== 底部 Tab 导航 ===== -->
+<nav class="tab-bar">
+  <div class="tab-item tab-active" data-tab="home">
+    <i class="fa-solid fa-house"></i>
+    <span>首页</span>
+  </div>
+  <div class="tab-item" data-tab="member">
+    <i class="fa-solid fa-crown"></i>
+    <span>会员专属</span>
+  </div>
+  <div class="tab-item" data-tab="orders">
+    <i class="fa-solid fa-list-check"></i>
+    <span>我的预订</span>
+  </div>
+  <div class="tab-item" data-tab="profile">
+    <i class="fa-regular fa-circle-user"></i>
+    <span>个人中心</span>
+  </div>
+</nav>
+
+<!-- ===== 预订弹窗 ===== -->
+<div class="modal-overlay" id="bookModal">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose"><i class="fa-solid fa-xmark"></i></button>
+    <h2 class="modal-title"><i class="fa-solid fa-calendar-check"></i> 在线预订</h2>
+    <p class="modal-shop-name">大榕树下茶馆·棋牌室（万锦城店）</p>
+    <div class="modal-form">
+      <div class="form-group">
+        <label><i class="fa-solid fa-user"></i> 姓名</label>
+        <input type="text" id="bookName" placeholder="请输入您的姓名" />
+      </div>
+      <div class="form-group">
+        <label><i class="fa-solid fa-phone"></i> 手机号</label>
+        <input type="tel" id="bookPhone" placeholder="请输入手机号码" maxlength="11" />
+      </div>
+      <div class="form-group">
+        <label><i class="fa-solid fa-users"></i> 人数</label>
+        <div class="stepper">
+          <button class="step-btn" id="stepMinus">-</button>
+          <span id="personCount">2</span>
+          <button class="step-btn" id="stepPlus">+</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label><i class="fa-solid fa-calendar-days"></i> 日期</label>
+        <input type="date" id="bookDate" />
+      </div>
+      <div class="form-group">
+        <label><i class="fa-solid fa-clock"></i> 时间</label>
+        <select id="bookTime">
+          <option value="">请选择时间</option>
+          <option>09:00</option><option>10:00</option><option>11:00</option>
+          <option>12:00</option><option>13:00</option><option>14:00</option>
+          <option>15:00</option><option>16:00</option><option>17:00</option>
+          <option>18:00</option><option>19:00</option><option>20:00</option>
+          <option>21:00</option><option>22:00</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label><i class="fa-solid fa-pen"></i> 备注</label>
+        <textarea id="bookNote" placeholder="如需包厢、特殊要求请备注…" rows="2"></textarea>
+      </div>
+    </div>
+    <button class="btn-confirm-book" id="btnConfirmBook">确认预订</button>
+    <p class="modal-tip">随时退 · 过期自动退 · 无押金</p>
+  </div>
+</div>
+
+<!-- ===== 抢购确认 Toast ===== -->
+<div class="toast" id="toast"></div>
+
+<!-- ===== 预订成功弹窗 ===== -->
+<div class="modal-overlay" id="successModal" style="display:none;">
+  <div class="modal-box success-box">
+    <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+    <h2>预订成功！</h2>
+    <p>我们已收到您的预订信息，将在30分钟内电话确认。</p>
+    <p class="success-tip">请保持手机畅通 📞</p>
+    <button class="btn-confirm-book" id="btnSuccessClose">好的，知道了</button>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
