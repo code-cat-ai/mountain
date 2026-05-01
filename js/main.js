@@ -134,11 +134,26 @@ $(function () {
   /* ====================================================
      4. 导航按钮
   ==================================================== */
-  // 腾讯地图导航 URI（无需 API Key）
-  var NAV_LAT = 34.0183;
-  var NAV_LNG = 108.5742;
+  // ── 坐标定义（高德/腾讯均用 GCJ-02）──
   var NAV_NAME = '树礼见山茶馆';
   var NAV_ADDR = '陕西省西安市鄠邑区玉蝉街道西涝峪口村树礼见山茶馆';
+
+  // 高德实测 GCJ-02 坐标
+  var GCJ_LNG = 108.534783;
+  var GCJ_LAT = 34.027491;
+
+  // GCJ-02 → BD-09 转换（百度坐标系）
+  function gcj02ToBd09(lng, lat) {
+    var xPi = Math.PI * 3000.0 / 180.0;
+    var z = Math.sqrt(lng * lng + lat * lat) + 0.00002 * Math.sin(lat * xPi);
+    var theta = Math.atan2(lat, lng) + 0.000003 * Math.cos(lng * xPi);
+    return {
+      lng: +(z * Math.cos(theta) + 0.0065).toFixed(6),
+      lat: +(z * Math.sin(theta) + 0.006).toFixed(6)
+    };
+  }
+
+  var BD = gcj02ToBd09(GCJ_LNG, GCJ_LAT);  // 百度 BD-09 坐标
 
   // 显示地图选择弹窗
   function openNav() {
@@ -160,37 +175,40 @@ $(function () {
     }
   });
 
-  // 各地图 App 的唤起配置
+  // 各地图 App 唤起配置（坐标系各自对应）
   var mapApps = {
-    tencent: {
-      appUrl: 'qqmap://map/marker?coord=' + NAV_LAT + ',' + NAV_LNG
-        + '&title=' + encodeURIComponent(NAV_NAME)
-        + '&addr=' + encodeURIComponent(NAV_ADDR),
-      webUrl: 'https://apis.map.qq.com/uri/v1/marker'
-        + '?marker=coord:' + NAV_LAT + ',' + NAV_LNG
-        + ';title:' + encodeURIComponent(NAV_NAME)
-        + ';addr:' + encodeURIComponent(NAV_ADDR)
-        + '&referer=shulijianshanteahouse'
-    },
+    // 高德：GCJ-02，dev=0 表示已是国测局坐标
     amap: {
       appUrl: 'amapuri://viewMap?sourceApplication=shulijianshanteahouse'
         + '&poiname=' + encodeURIComponent(NAV_NAME)
-        + '&lat=' + NAV_LAT + '&lon=' + NAV_LNG + '&dev=0',
+        + '&lat=' + GCJ_LAT + '&lon=' + GCJ_LNG + '&dev=0',
       webUrl: 'https://uri.amap.com/marker'
-        + '?position=' + NAV_LNG + ',' + NAV_LAT
+        + '?position=' + GCJ_LNG + ',' + GCJ_LAT
         + '&name=' + encodeURIComponent(NAV_NAME)
         + '&callnative=1'
     },
+    // 百度：BD-09（由 GCJ-02 转换得到）
     baidu: {
-      appUrl: 'baidumap://map/marker?location=' + NAV_LAT + ',' + NAV_LNG
+      appUrl: 'baidumap://map/marker?location=' + BD.lat + ',' + BD.lng
         + '&title=' + encodeURIComponent(NAV_NAME)
         + '&content=' + encodeURIComponent(NAV_ADDR)
         + '&traffic=1&src=andr.baidu.openAPIdemo',
       webUrl: 'http://api.map.baidu.com/marker'
-        + '?location=' + NAV_LAT + ',' + NAV_LNG
+        + '?location=' + BD.lat + ',' + BD.lng
         + '&title=' + encodeURIComponent(NAV_NAME)
         + '&content=' + encodeURIComponent(NAV_ADDR)
         + '&output=html'
+    },
+    // 腾讯：GCJ-02（与高德相同坐标系）
+    tencent: {
+      appUrl: 'qqmap://map/marker?coord=' + GCJ_LAT + ',' + GCJ_LNG
+        + '&title=' + encodeURIComponent(NAV_NAME)
+        + '&addr=' + encodeURIComponent(NAV_ADDR),
+      webUrl: 'https://apis.map.qq.com/uri/v1/marker'
+        + '?marker=coord:' + GCJ_LAT + ',' + GCJ_LNG
+        + ';title:' + encodeURIComponent(NAV_NAME)
+        + ';addr:' + encodeURIComponent(NAV_ADDR)
+        + '&referer=shulijianshanteahouse'
     }
   };
 
@@ -444,8 +462,8 @@ $(function () {
    如坐标偏差，可在腾讯地图拾取坐标：https://lbs.qq.com/getPoint/
 ==================================================== */
 function initQQMap() {
-  var lat = 34.0183;
-  var lng = 108.5742;
+  var lat = 34.027491;   // GCJ-02 高德实测坐标
+  var lng = 108.534783;
   var center = new qq.maps.LatLng(lat, lng);
 
   var map = new qq.maps.Map(document.getElementById('qqMap'), {
