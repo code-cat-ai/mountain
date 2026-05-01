@@ -134,14 +134,86 @@ $(function () {
   /* ====================================================
      4. 导航按钮
   ==================================================== */
+  // 腾讯地图导航 URI（无需 API Key）
+  var NAV_LAT = 34.0183;
+  var NAV_LNG = 108.5742;
+  var NAV_NAME = '树礼见山茶馆';
+  var NAV_ADDR = '陕西省西安市鄠邑区玉蝉街道西涝峪口村树礼见山茶馆';
+
+  // 显示地图选择弹窗
   function openNav() {
-    var addr = encodeURIComponent('陕西省西安市莲湖区汉城南路万锦城购物中心三楼北侧06铺');
-    // 尝试唤起地图 App，回退到高德
-    var url = 'https://uri.amap.com/marker?position=108.908,34.266&name=大榕树下茶馆·棋牌室（万锦城店）&src=mypage&coordinate=gaode&callnative=0';
-    window.open(url, '_blank');
+    $('#mapModal').addClass('open');
+    $('body').css('overflow', 'hidden');
   }
 
   $('#btnNav, #btnNavMap').on('click', openNav);
+
+  // 取消关闭
+  $('#mapModalCancel').on('click', function () {
+    $('#mapModal').removeClass('open');
+    $('body').css('overflow', '');
+  });
+  $('#mapModal').on('click', function (e) {
+    if ($(e.target).is('#mapModal')) {
+      $('#mapModal').removeClass('open');
+      $('body').css('overflow', '');
+    }
+  });
+
+  // 各地图 App 的唤起配置
+  var mapApps = {
+    tencent: {
+      appUrl: 'qqmap://map/marker?coord=' + NAV_LAT + ',' + NAV_LNG
+        + '&title=' + encodeURIComponent(NAV_NAME)
+        + '&addr=' + encodeURIComponent(NAV_ADDR),
+      webUrl: 'https://apis.map.qq.com/uri/v1/marker'
+        + '?marker=coord:' + NAV_LAT + ',' + NAV_LNG
+        + ';title:' + encodeURIComponent(NAV_NAME)
+        + ';addr:' + encodeURIComponent(NAV_ADDR)
+        + '&referer=shulijianshanteahouse'
+    },
+    amap: {
+      appUrl: 'amapuri://viewMap?sourceApplication=shulijianshanteahouse'
+        + '&poiname=' + encodeURIComponent(NAV_NAME)
+        + '&lat=' + NAV_LAT + '&lon=' + NAV_LNG + '&dev=0',
+      webUrl: 'https://uri.amap.com/marker'
+        + '?position=' + NAV_LNG + ',' + NAV_LAT
+        + '&name=' + encodeURIComponent(NAV_NAME)
+        + '&callnative=1'
+    },
+    baidu: {
+      appUrl: 'baidumap://map/marker?location=' + NAV_LAT + ',' + NAV_LNG
+        + '&title=' + encodeURIComponent(NAV_NAME)
+        + '&content=' + encodeURIComponent(NAV_ADDR)
+        + '&traffic=1&src=andr.baidu.openAPIdemo',
+      webUrl: 'http://api.map.baidu.com/marker'
+        + '?location=' + NAV_LAT + ',' + NAV_LNG
+        + '&title=' + encodeURIComponent(NAV_NAME)
+        + '&content=' + encodeURIComponent(NAV_ADDR)
+        + '&output=html'
+    }
+  };
+
+  // 点击地图选项：先尝试唤起 App，2s 未响应则打开网页版
+  $('.map-picker-btn').on('click', function () {
+    var key = $(this).data('map');
+    var cfg = mapApps[key];
+    if (!cfg) return;
+
+    $('#mapModal').removeClass('open');
+    $('body').css('overflow', '');
+
+    var fallback = setTimeout(function () {
+      window.open(cfg.webUrl, '_blank');
+    }, 2000);
+
+    // 页面失焦说明 App 被成功唤起，取消网页跳转
+    $(window).one('blur', function () {
+      clearTimeout(fallback);
+    });
+
+    window.location.href = cfg.appUrl;
+  });
 
 
   /* ====================================================
@@ -365,3 +437,41 @@ $(function () {
   }
 
 });
+
+/* ====================================================
+   腾讯地图初始化（由 SDK callback 触发）
+   坐标：陕西省西安市鄠邑区玉蝉街道西涝峪口村
+   如坐标偏差，可在腾讯地图拾取坐标：https://lbs.qq.com/getPoint/
+==================================================== */
+function initQQMap() {
+  var lat = 34.0183;
+  var lng = 108.5742;
+  var center = new qq.maps.LatLng(lat, lng);
+
+  var map = new qq.maps.Map(document.getElementById('qqMap'), {
+    center: center,
+    zoom: 15,
+    mapTypeId: qq.maps.MapTypeId.ROADMAP
+  });
+
+  var marker = new qq.maps.Marker({
+    position: center,
+    map: map,
+    title: '树礼见山茶馆'
+  });
+
+  var infoWin = new qq.maps.InfoWindow({ map: map });
+  infoWin.setContent(
+    '<div style="padding:6px 8px;font-size:13px;line-height:1.6;">' +
+    '<strong style="color:#7B5C1E;">🍵 树礼见山茶馆</strong><br>' +
+    '<span style="color:#666;font-size:12px;">西涝峪口村 · 隐于山间</span>' +
+    '</div>'
+  );
+  infoWin.setPosition(center);
+  infoWin.open();
+
+  qq.maps.event.addListener(marker, 'click', function () {
+    infoWin.open();
+    infoWin.setPosition(center);
+  });
+}
