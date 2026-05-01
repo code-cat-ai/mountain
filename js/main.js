@@ -5,7 +5,7 @@ $(function () {
      原理：在末尾追加第一张的克隆，播完后静默归位到真正第一张
   ==================================================== */
   var $slider = $('#bannerSlider');
-  var slideTotal = 4;
+  var slideTotal = 11;
   var slideNow = 0;   // 当前真实索引（0 ~ slideTotal-1）
   var isTransitioning = false;
   var autoTimer;
