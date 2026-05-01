@@ -397,7 +397,17 @@
     <span class="section-icon"><i class="fa-solid fa-map-location-dot"></i></span>
     <span>位置信息</span>
   </div>
-  <div id="qqMap" class="qq-map-container"></div>
+  <div class="map-static" id="mapStatic" onclick="openTencentMapWeb()">
+    <div class="map-static-grid"></div>
+    <div class="map-static-center">
+      <div class="map-pin-wrap">
+        <i class="fa-solid fa-location-dot map-pin-icon"></i>
+      </div>
+      <div class="map-static-label">树礼见山茶馆</div>
+      <div class="map-static-sub">西涝峪口村 · 秦岭山间</div>
+    </div>
+    <div class="map-static-hint"><i class="fa-solid fa-up-right-from-square"></i> 点击在腾讯地图中查看</div>
+  </div>
   <div class="map-info-row">
     <div class="map-info-left">
       <p class="map-full-addr"><i class="fa-solid fa-location-dot"></i> 陕西省西安市鄠邑区玉蝉街道西涝峪口村树礼见山茶馆</p>
@@ -522,7 +532,5 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="js/main.js"></script>
-<!-- 腾讯地图 JS API（免费申请Key：https://lbs.qq.com/） -->
-<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=YOUR_API_KEY&callback=initQQMap"></script>
 </body>
 </html>

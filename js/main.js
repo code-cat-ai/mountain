@@ -457,39 +457,13 @@ $(function () {
 });
 
 /* ====================================================
-   腾讯地图初始化（由 SDK callback 触发）
-   坐标：陕西省西安市鄠邑区玉蝉街道西涝峪口村
-   如坐标偏差，可在腾讯地图拾取坐标：https://lbs.qq.com/getPoint/
+   点击静态地图 → 打开腾讯地图网页查看位置
 ==================================================== */
-function initQQMap() {
-  var lat = 34.027491;   // GCJ-02 高德实测坐标
-  var lng = 108.534783;
-  var center = new qq.maps.LatLng(lat, lng);
-
-  var map = new qq.maps.Map(document.getElementById('qqMap'), {
-    center: center,
-    zoom: 15,
-    mapTypeId: qq.maps.MapTypeId.ROADMAP
-  });
-
-  var marker = new qq.maps.Marker({
-    position: center,
-    map: map,
-    title: '树礼见山茶馆'
-  });
-
-  var infoWin = new qq.maps.InfoWindow({ map: map });
-  infoWin.setContent(
-    '<div style="padding:6px 8px;font-size:13px;line-height:1.6;">' +
-    '<strong style="color:#7B5C1E;">🍵 树礼见山茶馆</strong><br>' +
-    '<span style="color:#666;font-size:12px;">西涝峪口村 · 隐于山间</span>' +
-    '</div>'
-  );
-  infoWin.setPosition(center);
-  infoWin.open();
-
-  qq.maps.event.addListener(marker, 'click', function () {
-    infoWin.open();
-    infoWin.setPosition(center);
-  });
+function openTencentMapWeb() {
+  var url = 'https://apis.map.qq.com/uri/v1/marker'
+    + '?marker=coord:34.027491,108.534783'
+    + ';title:' + encodeURIComponent('树礼见山茶馆')
+    + ';addr:' + encodeURIComponent('陕西省西安市鄠邑区玉蝉街道西涝峪口村树礼见山茶馆')
+    + '&referer=shulijianshanteahouse';
+  window.open(url, '_blank');
 }
