@@ -439,19 +439,19 @@
 <div class="modal-overlay" id="mapModal">
   <div class="map-picker-box">
     <p class="map-picker-title"><i class="fa-solid fa-map-location-dot"></i> 选择地图导航</p>
-    <button class="map-picker-btn" data-map="tencent">
-      <img src="https://lbs.qq.com/favicon.ico" class="map-app-icon" onerror="this.style.display='none'" />
-      <span>腾讯地图</span>
-      <i class="fa-solid fa-chevron-right"></i>
-    </button>
     <button class="map-picker-btn" data-map="amap">
-      <img src="https://a.amap.com/jsapi_demos/static/resource/favicon.ico" class="map-app-icon" onerror="this.style.display='none'" />
+      <img src="https://webapi.amap.com/theme/v1.3/images/newpc/favicon.ico" class="map-app-icon" onerror="this.src='https://a.amap.com/jsapi_demos/static/resource/favicon.ico'" />
       <span>高德地图</span>
       <i class="fa-solid fa-chevron-right"></i>
     </button>
     <button class="map-picker-btn" data-map="baidu">
       <img src="https://api.map.baidu.com/favicon.ico" class="map-app-icon" onerror="this.style.display='none'" />
       <span>百度地图</span>
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+    <button class="map-picker-btn" data-map="tencent">
+      <img src="https://lbs.qq.com/favicon.ico" class="map-app-icon" onerror="this.style.display='none'" />
+      <span>腾讯地图</span>
       <i class="fa-solid fa-chevron-right"></i>
     </button>
     <button class="map-picker-cancel" id="mapModalCancel">取消</button>
