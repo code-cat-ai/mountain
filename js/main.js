@@ -1,17 +1,60 @@
 $(function () {
 
   /* ====================================================
-     1. Banner 自动轮播
+     1. Banner 无缝循环轮播
+     原理：在末尾追加第一张的克隆，播完后静默归位到真正第一张
   ==================================================== */
+  var $slider = $('#bannerSlider');
   var slideTotal = 4;
-  var slideNow = 0;
+  var slideNow = 0;   // 当前真实索引（0 ~ slideTotal-1）
+  var isTransitioning = false;
   var autoTimer;
 
+  // 在末尾追加第一张克隆，形成 [0,1,2,3,clone-0] 共5个
+  var $cloneFirst = $slider.find('.banner-slide').first().clone();
+  $cloneFirst.find('.pkg-new-badge').remove();
+  $slider.append($cloneFirst);
+
+  // 用绝对位置控制，避免 flex 宽度计算误差
+  function setSlide(idx, animate) {
+    if (animate === false) {
+      $slider.css('transition', 'none');
+    } else {
+      $slider.css('transition', 'transform 0.4s cubic-bezier(.4,0,.2,1)');
+    }
+    $slider.css('transform', 'translateX(-' + idx * 100 + '%)');
+  }
+
+  function updateUI(realIdx) {
+    $('#slideNow').text(realIdx + 1);
+    $('.dot').removeClass('active').eq(realIdx).addClass('active');
+  }
+
   function goSlide(idx) {
-    slideNow = (idx + slideTotal) % slideTotal;
-    $('#bannerSlider').css('transform', 'translateX(-' + slideNow * 100 + '%)');
-    $('#slideNow').text(slideNow + 1);
-    $('.dot').removeClass('active').eq(slideNow).addClass('active');
+    if (isTransitioning) return;
+    isTransitioning = true;
+
+    // idx 可能是 -1（向左超界）或 slideTotal（向右超界）
+    var targetIdx = idx;
+    if (idx < 0) targetIdx = 0;         // 边界保护：不支持向左无缝（可扩展）
+
+    setSlide(targetIdx, true);
+
+    // 真实显示的圆点 / 计数器：克隆那张对应第1张
+    var realIdx = targetIdx >= slideTotal ? 0 : targetIdx;
+    updateUI(realIdx);
+
+    // 过渡结束后处理
+    $slider.one('transitionend webkitTransitionEnd', function () {
+      if (targetIdx >= slideTotal) {
+        // 已播到克隆的第一张，静默跳回真正第一张
+        setSlide(0, false);
+        slideNow = 0;
+      } else {
+        slideNow = targetIdx;
+      }
+      isTransitioning = false;
+    });
   }
 
   function startAuto() {
@@ -29,7 +72,6 @@ $(function () {
   // 触摸滑动
   var touchStartX = 0;
   var touchEndX = 0;
-  var $slider = $('#bannerSlider');
 
   $slider.on('touchstart', function (e) {
     touchStartX = e.originalEvent.changedTouches[0].screenX;
