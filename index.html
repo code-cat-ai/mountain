@@ -18,7 +18,7 @@
   <span class="nav-title">树礼见山·Mountain In Sight</span>
   <div class="nav-actions">
     <button class="nav-btn" id="btnShare" aria-label="分享"><i class="fa-solid fa-share-nodes"></i></button>
-    <button class="nav-btn" id="btnFav" aria-label="收藏"><i class="fa-regular fa-star" id="favIcon"></i></button>
+    <!-- <button class="nav-btn" id="btnFav" aria-label="收藏"><i class="fa-regular fa-star" id="favIcon"></i></button> -->
   </div>
 </header>
 
@@ -558,6 +558,48 @@
     </div>
     <button class="btn-confirm-book" id="btnConfirmBook">确认预订</button>
     <p class="modal-tip">随时退 · 过期自动退 · 无押金</p>
+  </div>
+</div>
+
+<!-- ===== 微信内浏览器分享引导遮罩 ===== -->
+<div class="share-wechat-guide" id="shareWechatGuide">
+  <div class="swg-inner">
+    <div class="swg-arrow-wrap">
+      <svg class="swg-arrow-svg" viewBox="0 0 70 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 88 C12 40, 58 28, 58 10" stroke="white" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+        <polyline points="46,4 60,10 56,24" stroke="white" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
+      </svg>
+    </div>
+    <div class="swg-tips">
+      <p>点击右上角 <strong>···</strong> 按钮</p>
+      <p>选择 <strong>发送给朋友</strong></p>
+      <p>或 <strong>分享到朋友圈</strong></p>
+    </div>
+  </div>
+  <p class="swg-close-hint">点击任意处关闭</p>
+</div>
+
+<!-- ===== 分享面板（非微信环境）===== -->
+<div class="modal-overlay" id="shareModal">
+  <div class="share-panel">
+    <p class="share-panel-title">分享到</p>
+    <div class="share-opts-row">
+      <button class="share-opt" id="shareToFriend">
+        <div class="share-opt-icon share-icon-wechat"><i class="fa-brands fa-weixin"></i></div>
+        <span>微信好友</span>
+      </button>
+      <button class="share-opt" id="shareToMoments">
+        <div class="share-opt-icon share-icon-moments">
+          <svg viewBox="0 0 24 24" fill="white" width="22" height="22"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="5" fill="#07C160"/><circle cx="12" cy="5" r="2" fill="white"/><circle cx="12" cy="19" r="2" fill="white"/><circle cx="5" cy="12" r="2" fill="white"/><circle cx="19" cy="12" r="2" fill="white"/></svg>
+        </div>
+        <span>朋友圈</span>
+      </button>
+      <button class="share-opt" id="shareCopyLink">
+        <div class="share-opt-icon share-icon-copy"><i class="fa-solid fa-link"></i></div>
+        <span>复制链接</span>
+      </button>
+    </div>
+    <button class="share-cancel-btn" id="shareCancelBtn">取消</button>
   </div>
 </div>
 

@@ -1125,6 +1125,134 @@ img { display: block; width: 100%; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
 /* ===================================================
+   微信引导分享遮罩
+   =================================================== */
+.share-wechat-guide {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  z-index: 400;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 10px 14px 0 0;
+  animation: fadeIn 0.2s ease;
+}
+.share-wechat-guide.open { display: flex; }
+
+.swg-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-right: 4px;
+}
+.swg-arrow-wrap {
+  width: 60px;
+  height: 86px;
+  animation: swgBounce 1.2s ease-in-out infinite;
+}
+.swg-arrow-svg { width: 100%; height: 100%; }
+
+@keyframes swgBounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+.swg-tips {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 12px;
+  padding: 12px 16px;
+  text-align: center;
+}
+.swg-tips p {
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.9;
+}
+.swg-tips strong { color: #7EE87E; }
+
+.swg-close-hint {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.5);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* ===================================================
+   分享底部面板（非微信环境）
+   =================================================== */
+.share-panel {
+  background: var(--card-bg);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: 20px 20px 36px;
+  width: 100%;
+  max-width: var(--max-w);
+  animation: slideUp 0.3s cubic-bezier(.4,0,.2,1);
+}
+.share-panel-title {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-light);
+  margin-bottom: 22px;
+}
+.share-opts-row {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  margin-bottom: 24px;
+}
+.share-opt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.share-opt span {
+  font-size: 12px;
+  color: var(--text-mid);
+}
+.share-opt-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #fff;
+  transition: transform 0.15s;
+}
+.share-opt:active .share-opt-icon { transform: scale(0.92); }
+
+.share-icon-wechat  { background: #07C160; }
+.share-icon-moments { background: #07C160; }
+.share-icon-copy    { background: #5B9CF6; }
+
+.share-cancel-btn {
+  display: block;
+  width: 100%;
+  padding: 13px 0;
+  text-align: center;
+  font-size: 16px;
+  color: var(--text-mid);
+  background: var(--primary-bg);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  transition: background 0.15s;
+}
+.share-cancel-btn:active { background: var(--border); }
+
+/* ===================================================
    响应式 —— 更大屏时居中展示
    =================================================== */
 @media (min-width: 480px) {

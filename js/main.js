@@ -118,16 +118,97 @@ $(function () {
   /* ====================================================
      3. 分享按钮
   ==================================================== */
-  $('#btnShare').on('click', function () {
-    if (navigator.share) {
-      navigator.share({
-        title: '大榕树下茶馆·棋牌室',
-        text: '发现一家超棒的茶馆，环境好、服务好，快来一起玩！',
-        url: window.location.href
+
+  var SHARE_TITLE = '树礼见山·茶馆·棋牌';
+  var SHARE_DESC  = '隐于秦岭涝峪口的山间茶馆，喝茶赏景·棋牌娱乐·好友小聚，快来一起玩！';
+  var SHARE_URL   = window.location.href;
+
+  function isWeChat() {
+    return /MicroMessenger/i.test(navigator.userAgent);
+  }
+
+  // 复制链接到剪贴板
+  function copyShareLink(cb) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(SHARE_URL).then(cb).catch(function () {
+        legacyCopy(SHARE_URL);
+        cb && cb();
       });
     } else {
-      showToast('链接已复制，去分享给好友吧！');
+      legacyCopy(SHARE_URL);
+      cb && cb();
     }
+  }
+
+  function legacyCopy(text) {
+    var $tmp = $('<textarea>').val(text).css({ position: 'fixed', opacity: 0 }).appendTo('body');
+    $tmp[0].select();
+    try { document.execCommand('copy'); } catch (e) { /* ignore */ }
+    $tmp.remove();
+  }
+
+  // 关闭微信引导遮罩
+  function closeWechatGuide() {
+    $('#shareWechatGuide').removeClass('open');
+    $('body').css('overflow', '');
+  }
+
+  // 关闭分享面板
+  function closeShareModal() {
+    $('#shareModal').removeClass('open');
+    $('body').css('overflow', '');
+  }
+
+  $('#btnShare').on('click', function () {
+    if (isWeChat()) {
+      // 微信内置浏览器：显示引导遮罩，提示用户点右上角菜单
+      $('#shareWechatGuide').addClass('open');
+      $('body').css('overflow', 'hidden');
+    } else if (navigator.share) {
+      // 支持原生分享（iOS Safari / Android Chrome 等）
+      navigator.share({
+        title: SHARE_TITLE,
+        text: SHARE_DESC,
+        url: SHARE_URL
+      }).catch(function () { /* 用户取消，忽略 */ });
+    } else {
+      // 其他环境：显示底部分享面板
+      $('#shareModal').addClass('open');
+      $('body').css('overflow', 'hidden');
+    }
+  });
+
+  // 微信引导遮罩：点任意处关闭
+  $('#shareWechatGuide').on('click', closeWechatGuide);
+
+  // 分享面板：分享给微信好友
+  $('#shareToFriend').on('click', function () {
+    copyShareLink(function () {
+      closeShareModal();
+      showToast('链接已复制，粘贴给微信好友吧 👥');
+    });
+  });
+
+  // 分享面板：分享到朋友圈
+  $('#shareToMoments').on('click', function () {
+    copyShareLink(function () {
+      closeShareModal();
+      showToast('链接已复制，粘贴到朋友圈吧 🌟');
+    });
+  });
+
+  // 分享面板：复制链接
+  $('#shareCopyLink').on('click', function () {
+    copyShareLink(function () {
+      closeShareModal();
+      showToast('链接已复制到剪贴板 🔗');
+    });
+  });
+
+  // 分享面板取消
+  $('#shareCancelBtn').on('click', closeShareModal);
+  $('#shareModal').on('click', function (e) {
+    if ($(e.target).is('#shareModal')) closeShareModal();
   });
 
 
