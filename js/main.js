@@ -293,7 +293,9 @@ $(function () {
     }
   };
 
-  // 点击地图选项：先尝试唤起 App，2s 未响应则打开网页版
+  // 点击地图选项：先尝试唤起 App，2s 未响应则跳转网页版
+  // 注意：iOS Safari 在 setTimeout 内调用 window.open() 会被弹窗拦截器屏蔽，
+  // 改用 window.location.href 跳转网页版；同时用 visibilitychange 替代 blur 监听 App 唤起。
   $('.map-picker-btn').on('click', function () {
     var key = $(this).data('map');
     var cfg = mapApps[key];
@@ -302,14 +304,31 @@ $(function () {
     $('#mapModal').removeClass('open');
     $('body').css('overflow', '');
 
-    var fallback = setTimeout(function () {
-      window.open(cfg.webUrl, '_blank');
+    var appLaunched = false;
+
+    var fallbackTimer = setTimeout(function () {
+      if (!appLaunched) {
+        window.location.href = cfg.webUrl;
+      }
     }, 2000);
 
-    // 页面失焦说明 App 被成功唤起，取消网页跳转
-    $(window).one('blur', function () {
-      clearTimeout(fallback);
-    });
+    function cancelFallback() {
+      appLaunched = true;
+      clearTimeout(fallbackTimer);
+      window.removeEventListener('blur', cancelFallback);
+      document.removeEventListener('visibilitychange', onVisChange);
+    }
+
+    function onVisChange() {
+      if (document.hidden) {
+        cancelFallback();
+      }
+    }
+
+    // blur：桌面端 / Android Chrome 切换 App 时触发
+    window.addEventListener('blur', cancelFallback);
+    // visibilitychange：iOS Safari 切换 App 时更可靠
+    document.addEventListener('visibilitychange', onVisChange);
 
     window.location.href = cfg.appUrl;
   });
